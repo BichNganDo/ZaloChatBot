@@ -7,14 +7,21 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import servlets.*;
+import servlets.api.ApiKeyWordServlet;
+import servlets.key_word.AddKeyWordServlet;
+import servlets.key_word.EditKeyWordServlet;
+import servlets.key_word.ManageKeyWordServlet;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.addServlet(new ServletHolder(new DemoServlet()), "/demo");
+        context.addServlet(new ServletHolder(new ManageKeyWordServlet()), "/admin/keyword");
+        context.addServlet(new ServletHolder(new AddKeyWordServlet()), "/admin/keyword/add");
+        context.addServlet(new ServletHolder(new EditKeyWordServlet()), "/admin/keyword/edit");
+
+        context.addServlet(new ServletHolder(new ApiKeyWordServlet()), "/admin/api/keyword");
 
         ContextHandler resourceHandler = new ContextHandler("/static");
         String resource = "./public";
