@@ -60,7 +60,7 @@ public class KeyWordModel {
                 KeyWord keyWord = new KeyWord();
                 keyWord.setId(rs.getInt("id"));
                 keyWord.setKeyWord(rs.getString("key_word"));
-                keyWord.setRespondMessage(rs.getString("respond_message"));
+                keyWord.setResponseMessage(rs.getString("respond_message"));
                 keyWord.setStatus(rs.getInt("status"));
 
                 long currentTimeMillis = rs.getLong("created_date");
@@ -139,7 +139,7 @@ public class KeyWordModel {
             if (rs.next()) {
                 result.setId(rs.getInt("id"));
                 result.setKeyWord(rs.getString("key_word"));
-                result.setRespondMessage(rs.getString("respond_message"));
+                result.setResponseMessage(rs.getString("respond_message"));
                 result.setStatus(rs.getInt("status"));
 
                 long currentTimeMillis = rs.getLong("created_date");

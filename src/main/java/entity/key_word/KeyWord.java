@@ -4,17 +4,17 @@ public class KeyWord {
 
     private int id;
     private String keyWord;
-    private String respondMessage;
+    private String responseMessage;
     private int status;
     private String createdDate;
 
     public KeyWord() {
     }
 
-    public KeyWord(int id, String keyWord, String respondMessage, int status, String createdDate) {
+    public KeyWord(int id, String keyWord, String responseMessage, int status, String createdDate) {
         this.id = id;
         this.keyWord = keyWord;
-        this.respondMessage = respondMessage;
+        this.responseMessage = responseMessage;
         this.status = status;
         this.createdDate = createdDate;
     }
@@ -35,12 +35,12 @@ public class KeyWord {
         this.keyWord = keyWord;
     }
 
-    public String getRespondMessage() {
-        return respondMessage;
+    public String getResponseMessage() {
+        return responseMessage;
     }
 
-    public void setRespondMessage(String respondMessage) {
-        this.respondMessage = respondMessage;
+    public void setResponseMessage(String responseMessage) {
+        this.responseMessage = responseMessage;
     }
 
     public int getStatus() {

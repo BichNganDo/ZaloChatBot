@@ -7,6 +7,7 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import servlets.Webhook;
 import servlets.api.ApiKeyWordServlet;
 import servlets.key_word.AddKeyWordServlet;
 import servlets.key_word.EditKeyWordServlet;
@@ -20,6 +21,7 @@ public class Main {
         context.addServlet(new ServletHolder(new ManageKeyWordServlet()), "/admin/keyword");
         context.addServlet(new ServletHolder(new AddKeyWordServlet()), "/admin/keyword/add");
         context.addServlet(new ServletHolder(new EditKeyWordServlet()), "/admin/keyword/edit");
+        context.addServlet(new ServletHolder(new Webhook()), "/");
 
         context.addServlet(new ServletHolder(new ApiKeyWordServlet()), "/admin/api/keyword");
 
