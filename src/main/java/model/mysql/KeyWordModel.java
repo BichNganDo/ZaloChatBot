@@ -1,8 +1,8 @@
-package model;
+package model.mysql;
 
 import client.MysqlClient;
 import common.ErrorCode;
-import entity.key_word.KeyWord;
+import entity.sql.KeyWord;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

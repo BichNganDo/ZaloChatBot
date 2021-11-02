@@ -2,8 +2,8 @@ package servlets.api;
 
 import com.google.gson.Gson;
 import common.APIResult;
-import entity.sql.KeyWord;
-import entity.sql.ListKeyWord;
+import entity.firebase.KeyWordFirebase;
+import entity.firebase.ListKeyWordFirebase;
 import helper.ServletUtil;
 import java.io.IOException;
 import java.util.List;
@@ -11,10 +11,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.firebase.KeyWordFirebaseModel;
 import model.mysql.KeyWordModel;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-public class ApiKeyWordServlet extends HttpServlet {
+public class ApiKeyWordFirebaseServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Gson gson = new Gson();
@@ -29,18 +31,18 @@ public class ApiKeyWordServlet extends HttpServlet {
                 int searchStatus = NumberUtils.toInt(request.getParameter("search_status"));
 
                 int offset = (pageIndex - 1) * limit;
-                List<KeyWord> listKeyWord = KeyWordModel.INSTANCE.getSliceKeyWord(offset, limit, searchQuery, searchStatus);
-                int totalKeyWord = KeyWordModel.INSTANCE.getTotalKeyWord(searchQuery, searchStatus);
+                List<KeyWordFirebase> listKeyWord = KeyWordFirebaseModel.INSTANCE.getSliceKeyWordFirebase(offset, limit, searchQuery, searchStatus);
+                int totalKeyWord = KeyWordFirebaseModel.INSTANCE.getTotalKeyWordFirebase(searchQuery, searchStatus);
 
-                ListKeyWord listKeyWords = new ListKeyWord();
-                listKeyWords.setTotal(totalKeyWord);
-                listKeyWords.setListKeyWord(listKeyWord);
-                listKeyWords.setItemPerPage(10);
+                ListKeyWordFirebase listKeyWordsFirebase = new ListKeyWordFirebase();
+                listKeyWordsFirebase.setTotal(totalKeyWord);
+                listKeyWordsFirebase.setListKeyWordFirebase(listKeyWord);
+                listKeyWordsFirebase.setItemPerPage(10);
 
                 if (listKeyWord.size() >= 0) {
                     result.setErrorCode(0);
                     result.setMessage("Success");
-                    result.setData(listKeyWords);
+                    result.setData(listKeyWordsFirebase);
                 } else {
                     result.setErrorCode(-1);
                     result.setMessage("Fail");
@@ -48,11 +50,9 @@ public class ApiKeyWordServlet extends HttpServlet {
                 break;
             }
             case "getKeyWordById": {
-                int idKeyWord = NumberUtils.toInt(request.getParameter("id_key_word"));
-
-                KeyWord keyWordById = KeyWordModel.INSTANCE.getKeyWordByID(idKeyWord);
-
-                if (keyWordById.getId() > 0) {
+                String idKeyWord = request.getParameter("id_key_word");
+                KeyWordFirebase keyWordById = KeyWordFirebaseModel.INSTANCE.getKeyWordFirebaseByID(idKeyWord);
+                if (StringUtils.isNotEmpty(keyWordById.getId())) {
                     result.setErrorCode(0);
                     result.setMessage("Success");
                     result.setData(keyWordById);
@@ -81,8 +81,7 @@ public class ApiKeyWordServlet extends HttpServlet {
                 String respondMessage = request.getParameter("respondMessage");
                 int status = NumberUtils.toInt(request.getParameter("status"));
 
-                int addKeyWord = KeyWordModel.INSTANCE.addKeyWord(keyWord, respondMessage, status);
-
+                int addKeyWord = KeyWordFirebaseModel.INSTANCE.addKeyWordFirebase(keyWord, respondMessage, status);
                 if (addKeyWord >= 0) {
                     result.setErrorCode(0);
                     result.setMessage("Them KeyWord thanh cong!");
@@ -93,19 +92,12 @@ public class ApiKeyWordServlet extends HttpServlet {
                 break;
             }
             case "edit": {
-                int id = NumberUtils.toInt(request.getParameter("id"));
+                String id = request.getParameter("id");
                 String keyWord = request.getParameter("keyWord");
                 String respondMessage = request.getParameter("respondMessage");
                 int status = NumberUtils.toInt(request.getParameter("status"));
 
-                KeyWord keyWordById = KeyWordModel.INSTANCE.getKeyWordByID(id);
-                if (keyWordById.getId() == 0) {
-                    result.setErrorCode(-1);
-                    result.setMessage("Thất bại!");
-                    return;
-                }
-
-                int editKeyWord = KeyWordModel.INSTANCE.editKeyWord(id, keyWord, respondMessage, status);
+                int editKeyWord = KeyWordFirebaseModel.INSTANCE.editKeyWord(id, keyWord, respondMessage, status);
                 if (editKeyWord >= 0) {
                     result.setErrorCode(0);
                     result.setMessage("Sua KeyWord thanh cong!");
@@ -117,9 +109,9 @@ public class ApiKeyWordServlet extends HttpServlet {
             }
 
             case "delete": {
-                int id = NumberUtils.toInt(request.getParameter("id"));
-                int deleteKeyWord = KeyWordModel.INSTANCE.deleteKeyWord(id);
-                if (deleteKeyWord >= 0) {
+                String id = request.getParameter("id");
+                int delKeyWord = KeyWordFirebaseModel.INSTANCE.deleteKeyWord(id);
+                if (delKeyWord >= 0) {
                     result.setErrorCode(0);
                     result.setMessage("Xoa KeyWord thanh cong!");
                 } else {

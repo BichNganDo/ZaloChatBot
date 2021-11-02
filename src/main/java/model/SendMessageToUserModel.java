@@ -32,7 +32,7 @@ public class SendMessageToUserModel {
 
         HttpClient httpClient = HttpClientBuilder.create().build();
         HttpPost post = new HttpPost(postUrl);
-        StringEntity postingString = new StringEntity(databody);
+        StringEntity postingString = new StringEntity(databody, "UTF-8");
         post.setEntity(postingString);
         post.setHeader("Content-type", "application/json");
         post.setHeader("access_token", "fHhfOHrDKoog6-Lc7KfIAAyLvsONNGjoyLh48WbT1slYG_rU6sCPPzzcedyPDMrLt1x26JqiEYU85UuBHZ4e1Aq8s3HR62uDxXdk9GOfBJRCFDKe1mWbBD0tuYW24pOuyH3hTY8Q063s5R5dD1PuQjWzWYPeQd08q6NA7pXw6ZNFTE0u66iGBkuwq3y6FXDrzJlYGG0xEbRMQkf1EMaVSibG-tmwJof4_L742mbK5Z3p1_SK60SsFzzHxGbjO2CUeJFR5nCG4ntBCUGHA68X5VmonWiV5Wa_pZh2BNii92d36-yJW6Q2VHPIM2y");

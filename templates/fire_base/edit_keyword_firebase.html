@@ -93,7 +93,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Edit KeyWord</h1>
+                            <h1 class="m-0">Edit KeyWord Firebase</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
@@ -170,7 +170,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             var id_key_word = getUrlParameter('id');
             $http({
                 method: "GET",
-                url: $scope.APP_DOMAIN + "admin/api/keyword",
+                url: $scope.APP_DOMAIN + "admin/api/keywordfirebase",
                 params: {
                     action: 'getKeyWordById',
                     id_key_word: id_key_word
@@ -201,13 +201,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
                         }
                     }
-                    $http.post($scope.APP_DOMAIN + 'admin/api/keyword?action=edit', data, config)
+                    $http.post($scope.APP_DOMAIN + 'admin/api/keywordfirebase?action=edit', data, config)
                         .then(function(response) {
                             if (response.data.errorCode < 0) {
                                 showNotification("error", response.data.message);
                             } else {
                                 showNotification("success", response.data.message);
-                                window.location.replace($scope.APP_DOMAIN + "admin/keyword");
+                                window.location.replace($scope.APP_DOMAIN + "admin/keywordfirebase");
                             }
                         })
                 } else {

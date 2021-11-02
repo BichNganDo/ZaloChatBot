@@ -1,17 +1,17 @@
-package entity.key_word;
+package entity.firebase;
 
-public class KeyWord {
+public class KeyWordFirebase {
 
-    private int id;
+    private String id;
     private String keyWord;
     private String responseMessage;
     private int status;
     private String createdDate;
 
-    public KeyWord() {
+    public KeyWordFirebase() {
     }
 
-    public KeyWord(int id, String keyWord, String responseMessage, int status, String createdDate) {
+    public KeyWordFirebase(String id, String keyWord, String responseMessage, int status, String createdDate) {
         this.id = id;
         this.keyWord = keyWord;
         this.responseMessage = responseMessage;
@@ -19,11 +19,11 @@ public class KeyWord {
         this.createdDate = createdDate;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

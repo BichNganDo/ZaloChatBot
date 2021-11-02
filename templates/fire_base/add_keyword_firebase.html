@@ -62,6 +62,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                 </div>
 
+                <!-- SidebarSearch Form -->
+                <div class="form-inline">
+                    <div class="input-group" data-widget="sidebar-search">
+                        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-sidebar">
+                                <i class="fas fa-search fa-fw"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -93,7 +105,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Edit KeyWord</h1>
+                            <h1 class="m-0">Add KeyWord Firebase</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
@@ -129,7 +141,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     </select>
                                 </div>
                                 <div>
-                                    <button type="button" ng-click="saveDataEdit()" class="btn btn-primary">Save</button>
+                                    <button type="submit" ng-click="addData()" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
                         </form>
@@ -167,47 +179,28 @@ scratch. This page gets rid of all links and provides the needed markup only.
             $rootScope.lastUri = urltmp.split('#')[0];
 
             $scope.APP_DOMAIN = "${app_domain}/";
-            var id_key_word = getUrlParameter('id');
-            $http({
-                method: "GET",
-                url: $scope.APP_DOMAIN + "admin/api/keyword",
-                params: {
-                    action: 'getKeyWordById',
-                    id_key_word: id_key_word
-
-                },
-            }).then(function(response) {
-                console.log(response);
-                $scope.editKeyWord = response.data.data;
-                $scope.id = $scope.editKeyWord.id;
-                $scope.key_word = $scope.editKeyWord.keyWord;
-                $scope.res_message = $scope.editKeyWord.responseMessage;
-                $scope.status = $scope.editKeyWord.status + "";
-            })
-
-            $scope.saveDataEdit = function() { //item hay biến khác cũng được, không cần phải trùng tên với bên user
-                //lấy dữ liệu về
+            $scope.addData = function() {
                 if ($scope.key_word && $scope.res_message && $scope.status) {
                     var data = $.param({
-                        id: $scope.id,
                         keyWord: $scope.key_word,
                         respondMessage: $scope.res_message,
                         status: $scope.status
-                    });
-
+                    })
                     console.log(data);
                     var config = {
                         headers: {
                             'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
                         }
                     }
-                    $http.post($scope.APP_DOMAIN + 'admin/api/keyword?action=edit', data, config)
+                    $http.post($scope.APP_DOMAIN + 'admin/api/keywordfirebase?action=add', data, config)
                         .then(function(response) {
                             if (response.data.errorCode < 0) {
                                 showNotification("error", response.data.message);
                             } else {
+                                $scope.key_word = "";
+                                $scope.res_message = "";
+                                $scope.status = "0";
                                 showNotification("success", response.data.message);
-                                window.location.replace($scope.APP_DOMAIN + "admin/keyword");
                             }
                         })
                 } else {
@@ -215,7 +208,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 }
 
             }
-
         })
     </script>
 

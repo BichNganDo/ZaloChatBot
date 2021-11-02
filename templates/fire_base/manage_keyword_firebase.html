@@ -115,7 +115,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Manage Key Word</h1>
+                            <h1 class="m-0">Manage KeyWord Firebase</h1>
                         </div>
                         <!-- /.col -->
                         <div class="col-sm-6">
@@ -157,8 +157,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     </div>
                                 </div>
                                 <div class="col-sm-2 text-right">
-                                    <a class="btn btn-primary" href="/admin/keyword/add">
-                                        <i class="fas fa-plus"></i> Add KeyWord
+                                    <a class="btn btn-primary" href="/admin/keywordfirebase/add">
+                                        <i class="fas fa-plus"></i> Add KeyWord Firebase
                                     </a>
                                 </div>
                             </div>
@@ -167,7 +167,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">List KeyWord</h3>
+                            <h3 class="card-title">List KeyWord Firebase</h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                                     <i class="fas fa-minus"></i>
@@ -181,7 +181,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <table class="table table-striped projects">
                                 <thead>
                                     <tr>
-                                        <th style="width: 5%">
+                                        <th style="width: 10%">
                                             Id
                                         </th>
                                         <th style="width: 22%">
@@ -190,10 +190,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <th style="width: 27%; word-wrap: anywhere;">
                                             Respond Message
                                         </th>
-                                        <th style="width: 10%">
+                                        <th style="width: 6%">
                                             Status
                                         </th>
-                                        <th style="width: 15%">
+                                        <th style="width: 13%">
                                             Created Date
                                         </th>
                                         <th>
@@ -211,11 +211,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         </td>
                                         <td>{{item.createdDate}}</td>
                                         <td class="project-actions text-right">
-                                            <a class="btn btn-info btn-sm" href="/admin/keyword/edit?id={{item.id}}">
+                                            <a class="btn btn-info btn-sm" href="/admin/keywordfirebase/edit?id={{item.id}}">
                                                 <i class="fas fa-pencil-alt">
                                                 </i> Edit
                                             </a>
-                                            <a ng-click="delete(item.id, item.keyWord)" class="btn btn-danger btn-sm" href="#">
+                                            <a ng-click="delete(item.id)" class="btn btn-danger btn-sm" href="#">
                                                 <i class="fas fa-trash">
                                                 </i> Delete
                                             </a>
@@ -256,7 +256,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
         app.controller('mainCtrl', function($scope, $http, $rootScope) {
             var url = document.URL.split('/');
             var urltmp = url[4].split('?')[0];
-            console.log(urltmp);
             $rootScope.lastUri = urltmp.split('#')[0];
 
             $scope.APP_DOMAIN = "${app_domain}/";
@@ -265,7 +264,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             $scope.getListKeyWord = function() {
                 $http({
                     method: "GET",
-                    url: $scope.APP_DOMAIN + "admin/api/keyword",
+                    url: $scope.APP_DOMAIN + "admin/api/keywordfirebase",
                     params: {
                         action: 'getkeyword',
                         page_index: $scope.selectedPageIndex,
@@ -276,7 +275,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 }).then(function(response) {
                     console.log(response);
                     if (response.data.errorCode >= 0 && response.data.data) {
-                        $scope.listKeyWord = response.data.data.listKeyWord;
+                        $scope.listKeyWord = response.data.data.listKeyWordFirebase;
+                        console.log($scope.listKeyWord);
                         $scope.totalKeyWord = response.data.data.total;
                     } else {
                         $scope.listKeyWord = [];
@@ -292,8 +292,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
             $scope.getListKeyWord();
 
             //Delete
-            $scope.delete = function(idDel, nameDel) {
-                var r = confirm("Bạn chắc chắn muốn xóa " + '" ' + nameDel + ' "' + " ?");
+            $scope.delete = function(idDel) {
+                var r = confirm("Bạn chắc chắn muốn xóa " + '" ' + idDel + ' "' + " ?");
                 if (r == true) {
                     var data = $.param({
                         id: idDel
@@ -303,7 +303,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
                         }
                     }
-                    $http.post('${app_domain}/admin/api/keyword?action=delete', data, config)
+                    $http.post('${app_domain}/admin/api/keywordfirebase?action=delete', data, config)
                         .then(function(response) {
                             if (response.data.errorCode < 0) {
                                 showNotification("error", response.data.message);
@@ -315,6 +315,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         })
                 }
             }
+
         })
     </script>
 

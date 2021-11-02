@@ -1,4 +1,4 @@
-package entity.key_word;
+package entity.sql;
 
 import java.util.List;
 

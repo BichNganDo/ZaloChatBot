@@ -81,10 +81,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
                with font-awesome or any other icon font library -->
 
                         <li class="nav-item">
-                            <a href="/admin/keyword" class="nav-link active">
+                            <a href="/admin/keyword" class="nav-link" ng-class="lastUri == 'keyword' ? 'active' : ''">
                                 <i class="fas fa-key nav-icon"></i>
-                                <p>Manage KeyWord</p>
+                                <p>Manage Key Word</p>
                             </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/keywordfirebase" class="nav-link" ng-class="lastUri == 'keywordfirebase' ? 'active' : ''">
+                                <i class="fas fa-key nav-icon"></i>
+                                <p>Manage KeyWord Firebase</p>
+                            </a>
+                        </li>/a>
                         </li>
                     </ul>
                 </nav>
@@ -167,6 +174,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script>
         var app = angular.module('myApp', []); //ngPagination
         app.controller('mainCtrl', function($scope, $http, $rootScope) {
+            var url = document.URL.split('/');
+            var urltmp = url[4].split('?')[0];
+            console.log(urltmp);
+            $rootScope.lastUri = urltmp.split('#')[0];
 
             $scope.APP_DOMAIN = "${app_domain}/";
             $scope.addData = function() {
