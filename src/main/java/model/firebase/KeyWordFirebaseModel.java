@@ -2,6 +2,7 @@ package model.firebase;
 
 import common.ErrorCode;
 import entity.firebase.KeyWordFirebase;
+import entity.sql.KeyWord;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class KeyWordFirebaseModel {
     public static KeyWordFirebaseModel INSTANCE = new KeyWordFirebaseModel();
     private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-    public List<KeyWordFirebase> getSliceKeyWordFirebase(int offset, int limit, String searchQuery, int searchStatus) throws IOException {
+    public List<KeyWordFirebase> getSliceKeyWordFirebase(int offset, int limit, int searchStatus) throws IOException {
         List<KeyWordFirebase> resultListKeyWordFirebase = new ArrayList<>();
         CloseableHttpClient httpClient = HttpClients.createDefault();
         try {
@@ -67,7 +68,7 @@ public class KeyWordFirebaseModel {
         return resultListKeyWordFirebase;
     }
 
-    public int getTotalKeyWordFirebase(String searchQuery, int searchStatus) throws IOException {
+    public int getTotalKeyWordFirebase(int searchStatus) throws IOException {
         int total = 0;
         CloseableHttpClient httpClient = HttpClients.createDefault();
         try {
@@ -186,12 +187,13 @@ public class KeyWordFirebaseModel {
         return ErrorCode.SUCCESS.getValue();
     }
 
-    public static void main(String[] args) throws IOException {
-        List<KeyWordFirebase> result = INSTANCE.getSliceKeyWordFirebase(0, 10, "", 1);
-        int total = INSTANCE.getTotalKeyWordFirebase("", 1);
-        System.out.println(total);
-
-        KeyWordFirebase r = INSTANCE.getKeyWordFirebaseByID("-MnTbmQdMxHfy8CJkXwS");
-
+    public KeyWordFirebase getKeyWordByKey(String keyWord) throws IOException {
+        List<KeyWordFirebase> listKeyWord = INSTANCE.getSliceKeyWordFirebase(0, 10, 1);
+        for (KeyWordFirebase keyWordFirebase : listKeyWord) {
+            if (keyWordFirebase.getKeyWord().equalsIgnoreCase(keyWord)) {
+                return keyWordFirebase;
+            }
+        }
+        return null;
     }
 }

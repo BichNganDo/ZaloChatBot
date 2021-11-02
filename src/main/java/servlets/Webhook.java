@@ -1,5 +1,6 @@
 package servlets;
 
+import entity.firebase.KeyWordFirebase;
 import entity.sql.KeyWord;
 import helper.HttpHelper;
 import helper.ServletUtil;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.ResponseMessageModel;
 import model.SendMessageToUserModel;
+import model.firebase.KeyWordFirebaseModel;
 import org.json.JSONObject;
 
 public class Webhook extends HttpServlet {
@@ -28,8 +30,10 @@ public class Webhook extends HttpServlet {
 //        System.out.println(idSender);
 //        System.out.println(textMessage);
 
-        KeyWord keyWordByKey = ResponseMessageModel.INSTANCE.getKeyWordByKey(textMessage);
-
+//        KeyWord keyWordByKey = ResponseMessageModel.INSTANCE.getKeyWordByKey(textMessage);
+//        SendMessageToUserModel.INSTANCE.sendMessageToUser(idSender, keyWordByKey.getResponseMessage());
+        KeyWordFirebase keyWordByKey = KeyWordFirebaseModel.INSTANCE.getKeyWordByKey(textMessage);
         SendMessageToUserModel.INSTANCE.sendMessageToUser(idSender, keyWordByKey.getResponseMessage());
+
     }
 }

@@ -27,12 +27,11 @@ public class ApiKeyWordFirebaseServlet extends HttpServlet {
             case "getkeyword": {
                 int pageIndex = NumberUtils.toInt(request.getParameter("page_index"));
                 int limit = NumberUtils.toInt(request.getParameter("limit"), 10);
-                String searchQuery = request.getParameter("search_query");
                 int searchStatus = NumberUtils.toInt(request.getParameter("search_status"));
 
                 int offset = (pageIndex - 1) * limit;
-                List<KeyWordFirebase> listKeyWord = KeyWordFirebaseModel.INSTANCE.getSliceKeyWordFirebase(offset, limit, searchQuery, searchStatus);
-                int totalKeyWord = KeyWordFirebaseModel.INSTANCE.getTotalKeyWordFirebase(searchQuery, searchStatus);
+                List<KeyWordFirebase> listKeyWord = KeyWordFirebaseModel.INSTANCE.getSliceKeyWordFirebase(offset, limit, searchStatus);
+                int totalKeyWord = KeyWordFirebaseModel.INSTANCE.getTotalKeyWordFirebase(searchStatus);
 
                 ListKeyWordFirebase listKeyWordsFirebase = new ListKeyWordFirebase();
                 listKeyWordsFirebase.setTotal(totalKeyWord);
