@@ -2,7 +2,6 @@ package model.firebase;
 
 import common.ErrorCode;
 import entity.firebase.KeyWordFirebase;
-import entity.sql.KeyWord;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
