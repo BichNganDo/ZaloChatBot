@@ -23,12 +23,9 @@ public class Webhook extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServletUtil.printJson(request, response, "OK");
         String body = HttpHelper.getBodyData(request);
-//        System.out.println(body);
         JSONObject jbody = new JSONObject(body);
         String idSender = jbody.optJSONObject("sender").optString("id");
         String textMessage = jbody.optJSONObject("message").optString("text");
-//        System.out.println(idSender);
-//        System.out.println(textMessage);
 
 //        KeyWord keyWordByKey = ResponseMessageModel.INSTANCE.getKeyWordByKey(textMessage);
 //        SendMessageToUserModel.INSTANCE.sendMessageToUser(idSender, keyWordByKey.getResponseMessage());
